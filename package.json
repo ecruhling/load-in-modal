@@ -1,0 +1,11 @@
+{
+  "name": "load-in-modal",
+  "version": "1.0.0",
+  "description": "A JavaScript plugin (with no jQuery dependency) that integrates with Bootstrap's modal component to load WordPress content in a #content-modal when clicking on links with the 'load-in-modal' class.",
+  "main": "loadInModal.js",
+  "author": "Erik C. Rühling",
+  "license": "",
+  "dependencies": {
+    "bootstrap": "^5.1.1"
+  }
+}
