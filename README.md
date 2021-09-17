@@ -15,16 +15,19 @@ the class is removed correctly on subsequent modal openings.
 Data attributes examples to add to the link for the REST implementation:
 
 For pages:
-data-rest-path="/wp-json/wp/v2/pages?slug=SLUG"
+data-rest-path="/wp-json/wp/v2/pages?slug={slug}"
 
 For posts:
-data-rest-path="/wp-json/wp/v2/posts?slug=SLUG"
+data-rest-path="/wp-json/wp/v2/posts?slug={slug}"
 
-Where SLUG is the WordPress-generated slug for that particular page or post.
+Where {slug} is the WordPress-generated slug for that particular page or post.
 
 ###Requirements:
-* A loading element called #loading that will be shown or hidden while the content is loading.
-* A Bootstrap 5 modal with an id of '#content-modal'.
+* A loading element with an id of 'loading' that will be shown or hidden while the content is loading.
+* Bootstrap 5 spinner SCSS (for the #loading div).
+* A Bootstrap 5 modal with an id of 'content-modal'.
 * Bootstrap 5 Modal JS.
 
 Included are two Laravel Blade templates, one for the loading background, and the other for the content modal.
+
+Also included is the SCSS for the #loading div.
