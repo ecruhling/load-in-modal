@@ -82,7 +82,7 @@ function loadInModal() {
     } else {
 
       // get the REST path from the data-rest-path attribute, if it exists.
-      const restPath = event.target.dataset.restPath ? event.target.dataset.restPath : null;
+      const restPath = event.target.dataset.restPath ?? null;
 
       // init an XML HTTP request, emulating AJAX.
       let xmlhttp = new XMLHttpRequest();
@@ -99,9 +99,19 @@ function loadInModal() {
 
             if (restPath) { // load the content via REST.
               const responseJSON = JSON.parse(xmlhttp.responseText);
-              if (responseJSON[0].content.rendered !== null && responseJSON[0].content.rendered !== undefined) {
+              // check to make sure there is content in the JSON object. if so, display it
+              // if there is no content at the route, the modal displays empty, which
+              // is better than throwing an error, or displaying the loading element forever.
+              if (responseJSON.length !== 0 && responseJSON[0].content.rendered !== null && responseJSON[0].content.rendered !== undefined) {
                 // place the HTML into the modal body.
                 modalBody.innerHTML = responseJSON[0].content.rendered;
+              } else {
+                console.log('Check the REST path!');
+
+                // hide the #loading element.
+                loading.classList.remove('show');
+
+                return null;
               }
 
             } else { // fallback to use the link href.
@@ -124,9 +134,9 @@ function loadInModal() {
 
             // ERROR checking:
           } else if (xmlhttp.status === 400) {
-            console.log('There was an error 400.');
+            console.log('Error 400 (Bad Request)');
           } else {
-            console.log('Something other than 200 was returned.');
+            console.log('Check the URL!');
           }
 
           // hide the #loading element.
@@ -136,6 +146,13 @@ function loadInModal() {
       };
 
     }
+  })
+
+  // when the modal is hidden, remove the content
+  // this way, there is no chance that old content remains in the modal
+  // on subsequent displays
+  modalElement.addEventListener('hide.bs.modal', function () {
+    modalBody.innerHTML = '';
   })
 
 }
